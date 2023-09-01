@@ -3,11 +3,20 @@ package carreiras.com.github.helpdeskapi.domain.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import carreiras.com.github.helpdeskapi.domain.enums.Perfil;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+
+@Entity
 public class Tecnico extends Pessoa {
 
+    private static final long serialVersionUID = 1L;
+
+    @OneToMany(mappedBy = "tecnico")
     private List<Chamado> chamados = new ArrayList<>();
 
     public Tecnico() {
+        addPerfil(Perfil.TECNICO);
     }
 
     public Tecnico(
@@ -22,6 +31,7 @@ public class Tecnico extends Pessoa {
                 cpf,
                 email,
                 senha);
+        addPerfil(Perfil.TECNICO);
     }
 
     public List<Chamado> getChamados() {

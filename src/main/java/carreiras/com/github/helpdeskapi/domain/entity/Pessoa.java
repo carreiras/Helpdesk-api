@@ -1,24 +1,51 @@
 package carreiras.com.github.helpdeskapi.domain.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import carreiras.com.github.helpdeskapi.domain.enums.Perfil;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-public abstract class Pessoa {
+@Entity
+public abstract class Pessoa implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
+
+    @Column(unique = true)
     protected String nome;
+
+    @Column(unique = true)
     protected String cpf;
+
     protected String email;
+
     protected String senha;
+
+    @CollectionTable(name = "PERFIL")
+    @ElementCollection(fetch = FetchType.EAGER)
     protected Set<Integer> perfis = new HashSet<>();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCricao = LocalDate.now();
 
     public Pessoa() {
-        addPerfis(Perfil.CLIENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Pessoa(
@@ -32,7 +59,7 @@ public abstract class Pessoa {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        addPerfis(Perfil.CLIENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
@@ -81,7 +108,7 @@ public abstract class Pessoa {
                 .collect(Collectors.toSet());
     }
 
-    public void addPerfis(Perfil perfil) {
+    public void addPerfil(Perfil perfil) {
         this.perfis.add(perfil.getCodigo());
     }
 
