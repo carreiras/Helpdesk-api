@@ -16,7 +16,7 @@ public class Tecnico extends Pessoa {
     private List<Chamado> chamados = new ArrayList<>();
 
     public Tecnico() {
-        addPerfil(Perfil.TECNICO);
+        addPerfis(Perfil.TECNICO);
     }
 
     public Tecnico(
@@ -31,7 +31,7 @@ public class Tecnico extends Pessoa {
                 cpf,
                 email,
                 senha);
-        addPerfil(Perfil.TECNICO);
+        addPerfis(Perfil.TECNICO);
     }
 
     public List<Chamado> getChamados() {

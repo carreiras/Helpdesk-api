@@ -16,7 +16,7 @@ public class Cliente extends Pessoa {
     private List<Chamado> chamados = new ArrayList<>();
 
     public Cliente() {
-        addPerfil(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Cliente(
@@ -31,7 +31,7 @@ public class Cliente extends Pessoa {
                 cpf,
                 email,
                 senha);
-        addPerfil(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public List<Chamado> getChamados() {

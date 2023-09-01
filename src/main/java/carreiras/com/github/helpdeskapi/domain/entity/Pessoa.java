@@ -45,7 +45,7 @@ public abstract class Pessoa implements Serializable {
     protected LocalDate dataCricao = LocalDate.now();
 
     public Pessoa() {
-        addPerfil(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Pessoa(
@@ -59,7 +59,7 @@ public abstract class Pessoa implements Serializable {
         this.cpf = cpf;
         this.email = email;
         this.senha = senha;
-        addPerfil(Perfil.CLIENTE);
+        addPerfis(Perfil.CLIENTE);
     }
 
     public Integer getId() {
@@ -108,7 +108,7 @@ public abstract class Pessoa implements Serializable {
                 .collect(Collectors.toSet());
     }
 
-    public void addPerfil(Perfil perfil) {
+    public void addPerfis(Perfil perfil) {
         this.perfis.add(perfil.getCodigo());
     }
 
