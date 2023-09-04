@@ -22,12 +22,12 @@ public enum Perfil {
         return descricao;
     }
 
-    public static Perfil toEnum(Integer codigo) {
-        if (codigo == null)
+    public static Perfil toEnum(Integer m) {
+        if (m == null)
             return null;
 
         for (Perfil x : Perfil.values())
-            if (codigo.equals(x.getCodigo()))
+            if (m.equals(x.getCodigo()))
                 return x;
 
         throw new IllegalArgumentException("Perfil inválido.");
