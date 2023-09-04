@@ -45,10 +45,6 @@ public class TecnicoDTO implements Serializable {
         this.dataCriacao = tecnico.getDataCriacao();
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
-
     public Integer getId() {
         return id;
     }
