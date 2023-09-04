@@ -6,17 +6,19 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import carreiras.com.github.helpdeskapi.domain.enums.Perfil;
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 
 @Entity
 public abstract class Pessoa implements Serializable {
@@ -42,7 +44,7 @@ public abstract class Pessoa implements Serializable {
     protected Set<Integer> perfis = new HashSet<>();
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    protected LocalDate dataCricao = LocalDate.now();
+    protected LocalDate dataCriacao = LocalDate.now();
 
     public Pessoa() {
         addPerfis(Perfil.CLIENTE);
@@ -112,12 +114,12 @@ public abstract class Pessoa implements Serializable {
         this.perfis.add(perfil.getCodigo());
     }
 
-    public LocalDate getDataCricao() {
-        return dataCricao;
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataCricao(LocalDate dataCricao) {
-        this.dataCricao = dataCricao;
+    public void setDataCriacao(LocalDate dataCricao) {
+        this.dataCriacao = dataCricao;
     }
 
     @Override
