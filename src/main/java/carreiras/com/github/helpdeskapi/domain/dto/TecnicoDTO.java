@@ -31,6 +31,7 @@ public class TecnicoDTO implements Serializable {
     protected LocalDate dataCriacao = LocalDate.now();
 
     public TecnicoDTO() {
+        addPerfis(Perfil.CLIENTE);
     }
 
     public TecnicoDTO(Tecnico tecnico) {
@@ -91,8 +92,8 @@ public class TecnicoDTO implements Serializable {
                 .collect(Collectors.toSet());
     }
 
-    public void setPerfis(Set<Integer> perfis) {
-        this.perfis = perfis;
+    public void addPerfis(Perfil perfil) {
+        this.perfis.add(perfil.getCodigo());
     }
 
     public LocalDate getDataCriacao() {

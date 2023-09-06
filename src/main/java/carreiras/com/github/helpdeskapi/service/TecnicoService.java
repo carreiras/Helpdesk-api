@@ -3,12 +3,13 @@ package carreiras.com.github.helpdeskapi.service;
 import java.util.List;
 import java.util.Optional;
 
-import carreiras.com.github.helpdeskapi.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import carreiras.com.github.helpdeskapi.domain.dto.TecnicoDTO;
 import carreiras.com.github.helpdeskapi.domain.entity.Tecnico;
 import carreiras.com.github.helpdeskapi.domain.repository.TecnicoRepository;
+import carreiras.com.github.helpdeskapi.exception.ObjectNotFoundException;
 
 @Service
 public class TecnicoService {
@@ -23,6 +24,12 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return tecnicoRepository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        Tecnico tecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(tecnico);
     }
 
 }
