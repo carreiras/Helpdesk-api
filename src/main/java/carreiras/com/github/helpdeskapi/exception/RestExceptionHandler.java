@@ -23,4 +23,18 @@ public class RestExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
     }
+
+    @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<StandardError> jdbcSQLIntegrityConstraintViolationExceptionHandler(
+            JdbcSQLIntegrityConstraintViolationException ex,
+            HttpServletRequest request) {
+        StandardError standardError = new StandardError(
+                System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Data Breach",
+                ex.getMessage(),
+                request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
 }
