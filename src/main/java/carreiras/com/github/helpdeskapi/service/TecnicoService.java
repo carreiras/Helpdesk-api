@@ -3,7 +3,10 @@ package carreiras.com.github.helpdeskapi.service;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import carreiras.com.github.helpdeskapi.domain.dto.TecnicoDTO;
@@ -37,6 +40,25 @@ public class TecnicoService {
         validaPorCpfEEmail(tecnicoDTO);
         Tecnico tecnico = new Tecnico(tecnicoDTO);
         return tecnicoRepository.save(tecnico);
+    }
+
+    public Tecnico update(Integer id, @Valid TecnicoDTO tecnicoDTO) {
+        Tecnico tecnico = findById(id);
+        validaPorCpfEEmail(tecnicoDTO);
+
+        tecnicoDTO.setId(id);
+        tecnico = new Tecnico(tecnicoDTO);
+
+        return tecnicoRepository.save(tecnico);
+    }
+
+    public void delete(Integer id) {
+        Tecnico tecnico = findById(id);
+
+        if (tecnico.getChamados().size() > 0)
+            throw new DataIntegrityViolationException("Técnico possui ordens de serviço e não pode ser deletado.");
+
+        tecnicoRepository.deleteById(id);
     }
 
     private void validaPorCpfEEmail(TecnicoDTO tecnicoDTO) {

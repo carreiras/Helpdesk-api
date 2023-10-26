@@ -2,6 +2,7 @@ package carreiras.com.github.helpdeskapi.exception;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class RestExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError> objectNotFoundExceptionHandler(
+    public ResponseEntity<StandardError> handlerObjectNotFoundException(
             ObjectNotFoundException ex,
             HttpServletRequest request) {
         StandardError standardError = new StandardError(
@@ -26,23 +27,37 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(standardError);
     }
 
-    @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
-    public ResponseEntity<StandardError> jdbcSQLIntegrityConstraintViolationExceptionHandler(
-            JdbcSQLIntegrityConstraintViolationException ex,
+    @ExceptionHandler({ JdbcSQLIntegrityConstraintViolationException.class })
+    public ResponseEntity<StandardError> handlerJdbcSQLIntegrityConstraintViolationException(
+            JdbcSQLIntegrityConstraintViolationException e,
             HttpServletRequest request) {
         StandardError standardError = new StandardError(
                 System.currentTimeMillis(),
                 HttpStatus.BAD_REQUEST.value(),
                 "Data Breach",
-                ex.getMessage(),
+                e.getMessage(),
                 request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> methodArgumentNotValidExceptionHandler(
-            MethodArgumentNotValidException ex,
+    @ExceptionHandler({ DataIntegrityViolationException.class })
+    public ResponseEntity<StandardError> handlerDataIntegrityViolationException(
+            DataIntegrityViolationException e,
+            HttpServletRequest request) {
+        StandardError standardError = new StandardError(
+                System.currentTimeMillis(),
+                HttpStatus.BAD_REQUEST.value(),
+                "Data Breach",
+                e.getMessage(),
+                request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(standardError);
+    }
+
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    public ResponseEntity<StandardError> handlerMethodArgumentNotValidException(
+            MethodArgumentNotValidException e,
             HttpServletRequest request) {
         ValidationError validationError = new ValidationError(
                 System.currentTimeMillis(),
@@ -51,9 +66,10 @@ public class RestExceptionHandler {
                 "Erro na validação dos campos",
                 request.getRequestURI());
 
-        for (FieldError x : ex.getBindingResult().getFieldErrors()) 
+        for (FieldError x : e.getBindingResult().getFieldErrors())
             validationError.addError(x.getField(), x.getDefaultMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(validationError);
     }
+
 }
