@@ -2,12 +2,15 @@ package carreiras.com.github.helpdeskapi.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import carreiras.com.github.helpdeskapi.domain.dto.ClienteDTO;
 import carreiras.com.github.helpdeskapi.domain.enums.Perfil;
 
 @Entity
@@ -36,6 +39,20 @@ public class Cliente extends Pessoa {
                 email,
                 senha);
         addPerfis(Perfil.CLIENTE);
+    }
+
+    public Cliente(ClienteDTO clienteDTO) {
+        Set<Integer> perfis = clienteDTO.getPerfis().stream()
+                .map(m -> m.getCodigo())
+                .collect(Collectors.toSet());
+
+        this.id = clienteDTO.getId();
+        this.nome = clienteDTO.getNome();
+        this.cpf = clienteDTO.getCpf();
+        this.email = clienteDTO.getEmail();
+        this.senha = clienteDTO.getSenha();
+        this.perfis = perfis;
+        this.dataCriacao = clienteDTO.getDataCriacao();
     }
 
     public List<Chamado> getChamados() {
