@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import carreiras.com.github.helpdeskapi.domain.entity.Tecnico;
@@ -17,12 +19,16 @@ public class TecnicoDTO implements Serializable {
 
     protected Integer id;
 
+    @NotNull(message = "O campo NOME é requerido.")
     protected String nome;
 
+    @NotNull(message = "O campo CPF é requerido.")
     protected String cpf;
 
+    @NotNull(message = "O campo E-MAIL é requerido.")
     protected String email;
 
+    @NotNull(message = "O campo SENHA é requerido.")
     protected String senha;
 
     protected Set<Integer> perfis = new HashSet<>();
@@ -35,14 +41,17 @@ public class TecnicoDTO implements Serializable {
     }
 
     public TecnicoDTO(Tecnico tecnico) {
+        Set<Integer> perfils = tecnico.getPerfis()
+                .stream()
+                .map(m -> m.getCodigo())
+                .collect(Collectors.toSet());
+
         this.id = tecnico.getId();
         this.nome = tecnico.getNome();
         this.cpf = tecnico.getCpf();
         this.email = tecnico.getEmail();
         this.senha = tecnico.getSenha();
-        this.perfis = tecnico.getPerfis().stream()
-                .map(m -> m.getCodigo())
-                .collect(Collectors.toSet());
+        this.perfis = perfils;
         this.dataCriacao = tecnico.getDataCriacao();
     }
 

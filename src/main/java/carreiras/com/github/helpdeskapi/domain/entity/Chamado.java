@@ -15,7 +15,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import carreiras.com.github.helpdeskapi.domain.enums.Prioridade;
 import carreiras.com.github.helpdeskapi.domain.enums.Status;
 
-
 @Entity
 public class Chamado implements Serializable {
 

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import carreiras.com.github.helpdeskapi.domain.enums.Perfil;
 
-
 @Entity
 public class Cliente extends Pessoa {
 

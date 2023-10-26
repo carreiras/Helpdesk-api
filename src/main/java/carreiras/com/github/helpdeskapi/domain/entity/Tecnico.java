@@ -2,6 +2,7 @@ package carreiras.com.github.helpdeskapi.domain.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
@@ -41,14 +42,16 @@ public class Tecnico extends Pessoa {
     }
 
     public Tecnico(TecnicoDTO tecnicoDTO) {
+        Set<Integer> perfis = tecnicoDTO.getPerfis().stream()
+                .map(m -> m.getCodigo())
+                .collect(Collectors.toSet());
+
         this.id = tecnicoDTO.getId();
         this.nome = tecnicoDTO.getNome();
         this.cpf = tecnicoDTO.getCpf();
         this.email = tecnicoDTO.getEmail();
         this.senha = tecnicoDTO.getSenha();
-        this.perfis = tecnicoDTO.getPerfis().stream()
-                .map(m -> m.getCodigo())
-                .collect(Collectors.toSet());
+        this.perfis = perfis;
         this.dataCriacao = tecnicoDTO.getDataCriacao();
     }
 

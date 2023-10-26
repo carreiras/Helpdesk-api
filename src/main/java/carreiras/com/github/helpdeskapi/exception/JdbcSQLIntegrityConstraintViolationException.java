@@ -4,10 +4,6 @@ public class JdbcSQLIntegrityConstraintViolationException extends RuntimeExcepti
 
     private static final long serialVersionUID = 1L;
 
-//    public ObjectNotFoundException(String message, Throwable cause) {
-//        super(message, cause);
-//    }
-
     public JdbcSQLIntegrityConstraintViolationException(String message) {
         super(message);
     }
