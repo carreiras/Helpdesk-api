@@ -38,7 +38,9 @@ public class TecnicoController {
     @GetMapping
     public ResponseEntity<List<TecnicoDTO>> findAll() {
         List<Tecnico> tecnicos = tecnicoService.findAll();
-        List<TecnicoDTO> tecnicosDTO = tecnicos.stream().map(m -> new TecnicoDTO(m)).collect(Collectors.toList());
+        List<TecnicoDTO> tecnicosDTO = tecnicos.stream()
+                .map(m -> new TecnicoDTO(m))
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(tecnicosDTO);
     }
 

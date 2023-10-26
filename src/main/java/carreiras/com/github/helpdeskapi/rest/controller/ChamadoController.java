@@ -1,5 +1,8 @@
 package carreiras.com.github.helpdeskapi.rest.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,15 @@ public class ChamadoController {
     public ResponseEntity<ChamadoDTO> findById(@PathVariable Integer id) {
         Chamado chamado = chamadoService.findById(id);
         return ResponseEntity.ok().body(new ChamadoDTO(chamado));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ChamadoDTO>> findAll() {
+        List<Chamado> chamados = chamadoService.findAll();
+        List<ChamadoDTO> chamadosDTO = chamados.stream()
+                .map(m -> new ChamadoDTO(m))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok().body(chamadosDTO);
     }
 
 }

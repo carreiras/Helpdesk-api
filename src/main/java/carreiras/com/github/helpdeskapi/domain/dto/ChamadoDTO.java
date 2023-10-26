@@ -3,8 +3,6 @@ package carreiras.com.github.helpdeskapi.domain.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import carreiras.com.github.helpdeskapi.domain.entity.Chamado;
